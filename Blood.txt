@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract BloodBank {
+
+    // Define a struct to represent blood details
+    struct Blood {
+        string bloodType;
+        uint256 quantity;
+        string location;
+    }
+
+    // Mapping to store blood information based on location and blood type
+    mapping(string => mapping(string => Blood)) private bloodStorage;
+
+    // Event for adding or updating blood stock
+    // event StockUpdated(string bloodType, string location, uint256 quantity);
+
+    // Function to add or update blood stock in a specific location
+    function addOrUpdateStock(string memory _bloodType, string memory _location, uint256 _quantity) public {
+        Blood storage blood = bloodStorage[_bloodType][_location];
+        blood.bloodType = _bloodType;
+        blood.location = _location;
+        blood.quantity = _quantity;
+        // emit StockUpdated(_bloodType, _location, _quantity);
+    }
+
+    // Function to get blood stock availability at a specific location
+    function getAvailability(string memory _bloodType, string memory _location) public view returns (uint256) {
+        return bloodStorage[_bloodType][_location].quantity;
+    }
+}
